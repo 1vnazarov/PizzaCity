@@ -1,8 +1,8 @@
 class PizzaCity(
-    private val city: String, prices: List<Double>,
+    val city: String, prices: List<Double>,
     private val addons: List<String>
 ) : Drink, CheckPhoto, Sauce {
-    private val names = listOf("Неополитанская", "Римская", "Сицилийская", "Тирольская") // Ассортимент одинаковый
+    val names = listOf("Неополитанская", "Римская", "Сицилийская", "Тирольская") // Ассортимент одинаковый
     private val catalog = mutableListOf<Pizza>()
     init {
         for ((index, value) in names.withIndex()) {

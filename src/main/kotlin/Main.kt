@@ -4,16 +4,8 @@ fun main() {
         PizzaCity("Красноярск", listOf(590.0, 500.0, 450.0, 400.0), listOf("drink", "showCheck", "sauce")))
     var pizza: PizzaCity?
     while (true) {
-        pizza = pizzas.getOrNull(
-            getInput("""
-            Добрый день!
-            1 - Санкт-Петербург
-            2 - Москва
-            3 - Красноярск
-            Иначе - Выход из программы
-            Выберите город: 
-        """.trimIndent()).toInt() - 1
-        )
+        pizza = pizzas.getOrNull(getInput(prettyStringList(pizzas.mapIndexed{i, v -> "${i + 1} - ${v.city}\n"}.toString())
+            + "Иначе - Выход из программы\nВыберите город: ").toInt() - 1)
         if (pizza == null) break
         selectPizza(pizza)
     }
@@ -22,14 +14,8 @@ fun main() {
 fun selectPizza(pizza: PizzaCity) {
     var index: Int
     do {
-        index = getInput("""
-            1 - Неополитанская пицца
-            2 - Римская пицца
-            3 - Сицилийская пицца
-            4 - Тирольская пицца
-            0 - Вывести статистику
-            Выберите пиццу: 
-        """.trimIndent()).toInt() - 1
+        index = getInput(prettyStringList(pizza.names.mapIndexed{i, v -> "${i + 1} - $v пицца\n"}.toString())
+                + "0 - Вывести статистику\nВыберите пиццу: ").toInt() - 1
         when (index) {
             in 0..3 -> pizza.sale(index)
             -1 -> pizza.showStat()
@@ -45,7 +31,9 @@ fun selectPizza(pizza: PizzaCity) {
         pizza.saleSauce()
     }
 }
-
+fun prettyStringList(list: String): String {
+    return list.replace("[", "").replace("]", "").replace(", ", "")
+}
 fun getInput(prompt: String): String {
     print(prompt)
     return readln()
