@@ -4,7 +4,7 @@ fun main() {
         PizzaCity("Красноярск", listOf(590.0, 500.0, 450.0, 400.0), listOf("drink", "showCheck", "sauce")))
     var pizza: PizzaCity?
     while (true) {
-        pizza = pizzas.getOrNull(getInput(prettyStringList(pizzas.mapIndexed{i, v -> "${i + 1} - ${v.city}\n"}.toString())
+        pizza = pizzas.getOrNull(getInput("Добрый день!\n" + prettyStringList(pizzas.mapIndexed{i, v -> "${i + 1} - ${v.city}\n"}.toString())
             + "Иначе - Выход из программы\nВыберите город: ").toInt() - 1)
         if (pizza == null) break
         selectPizza(pizza)

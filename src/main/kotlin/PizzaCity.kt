@@ -73,8 +73,12 @@ class PizzaCity(
             }
         }
     }
+    private fun safeNaN(a: Double): Double {
+        return if (a.isNaN()) 0.0 else a
+    }
     private fun showPercent(a: Double, text: String) {
-        println("${a / totalCustomers * 100}% $text")
+
+        println("${safeNaN(a / totalCustomers * 100)}% $text")
     }
     fun showStat() {
         var money = 0.0
@@ -82,7 +86,7 @@ class PizzaCity(
             money += catalog[i].countSale * catalog[i].price
             print("Продано пиццы \"${names[i]}\": ${catalog[i].countSale} ")
             if (addons.contains("drink")) {
-                println("(кофе к ней: ${coffee.saleCountForEachPizza.getOrDefault(i, 0)} / ${coffee.countSale} шт., ${coffee.saleCountForEachPizza.getOrDefault(i, 0).toDouble() / coffee.countSale * 100}%)")
+                println("(кофе к ней: ${coffee.saleCountForEachPizza.getOrDefault(i, 0)} / ${coffee.countSale} шт., ${safeNaN(coffee.saleCountForEachPizza.getOrDefault(i, 0).toDouble() / coffee.countSale * 100)}%)")
             }
             else println()
         }
