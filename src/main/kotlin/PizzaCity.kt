@@ -64,6 +64,7 @@ class PizzaCity(
             if (addons.contains("drink")) {
                 println("(кофе к ней: ${coffee.saleCountForEachPizza.getOrDefault(i, 0)} / ${coffee.countSale} шт., ${coffee.saleCountForEachPizza.getOrDefault(i, 0).toDouble() / coffee.countSale * 100}%)")
             }
+            else println()
         }
         if (addons.contains("drink")) {
             val coffeeSum = coffee.countSale * coffee.price
