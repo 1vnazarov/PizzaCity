@@ -10,8 +10,10 @@ class PizzaCity(
         }
     }
     private var totalCustomers = 0
+    private var pizzaIndex = -1
     fun sale(index: Int) {
         println("Спасибо за покупку пиццы \"${names[index]}\" в городе $city")
+        pizzaIndex = index
         catalog[index].countSale++
         totalCustomers++
     }
@@ -46,6 +48,7 @@ class PizzaCity(
         """.trimIndent()) == "1") {
             coffee.countSale++
             println("С Вас ${coffee.price} рублей")
+            coffee.saleCountForEachPizza[pizzaIndex] = coffee.saleCountForEachPizza.getOrDefault(pizzaIndex, 0) + 1
         }
         else disagreeBuyCoffee++
     }
@@ -57,7 +60,10 @@ class PizzaCity(
         var money = 0.0
         for (i in names.indices) {
             money += catalog[i].countSale * catalog[i].price
-            println("Продано пиццы \"${names[i]}\": ${catalog[i].countSale}")
+            print("Продано пиццы \"${names[i]}\": ${catalog[i].countSale} ")
+            if (addons.contains("drink")) {
+                println("(кофе к ней: ${coffee.saleCountForEachPizza.getOrDefault(i, 0)} / ${coffee.countSale} шт., ${coffee.saleCountForEachPizza.getOrDefault(i, 0).toDouble() / coffee.countSale * 100}%)")
+            }
         }
         if (addons.contains("drink")) {
             val coffeeSum = coffee.countSale * coffee.price
