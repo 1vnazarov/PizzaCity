@@ -1,7 +1,7 @@
 class PizzaCity(
     private val city: String, prices: List<Double>,
     private val addons: List<String>
-) : Drink, CheckPhoto {
+) : Drink, CheckPhoto, Sauce {
     private val names = listOf("Неополитанская", "Римская", "Сицилийская", "Тирольская") // Ассортимент одинаковый
     private val catalog = mutableListOf<Pizza>()
     init {
@@ -12,7 +12,7 @@ class PizzaCity(
     private var totalCustomers = 0
     private var pizzaIndex = -1
     fun sale(index: Int) {
-        println("Спасибо за покупку пиццы \"${names[index]}\" в городе $city")
+        println("Спасибо за покупку пиццы \"${names[index]}\" за ${catalog[index].price} в городе $city")
         pizzaIndex = index
         catalog[index].countSale++
         totalCustomers++
@@ -52,7 +52,27 @@ class PizzaCity(
         }
         else disagreeBuyCoffee++
     }
-
+    private val cheeseSauce = PizzaSauce("Сырный соус", 70.0)
+    private val bbqSauce = PizzaSauce("Соус барбекю", 50.0)
+    override fun saleSauce() {
+        if (!(addons.contains("sauce"))) return
+        when (getInput("""
+        Выберите соус к пицце:
+        1 - Сырный соус
+        2 - Соус барбекю
+        Иначе - Без соуса
+        
+        """.trimIndent())) {
+            "1" -> {
+                cheeseSauce.countSale++
+                println("С Вас ${cheeseSauce.price}")
+            }
+            "2" -> {
+                bbqSauce.countSale++
+                println("С Вас ${bbqSauce.price}")
+            }
+        }
+    }
     private fun showPercent(a: Double, text: String) {
         println("${a / totalCustomers * 100}% $text")
     }
@@ -67,9 +87,12 @@ class PizzaCity(
             else println()
         }
         if (addons.contains("drink")) {
-            val coffeeSum = coffee.countSale * coffee.price
-            money += coffeeSum
-            println("Продано ${coffee.name.lowercase()}: ${coffee.countSale} (выручка за кофе: $coffeeSum)")
+            money += coffee.partStat()
+        }
+
+        if (addons.contains("sauce")) {
+            money += cheeseSauce.partStat()
+            money += bbqSauce.partStat()
         }
         money -= discount
         println("Всего заработано денег: $money")

@@ -1,6 +1,7 @@
 fun main() {
     val pizzas = listOf(PizzaCity("Санкт-Петербург", listOf(500.0, 400.0, 300.0, 200.0), listOf("drink")),
-        PizzaCity("Москва", listOf(900.0, 800.0, 700.0, 600.0), listOf("showCheck")))
+        PizzaCity("Москва", listOf(900.0, 800.0, 700.0, 600.0), listOf("showCheck")),
+        PizzaCity("Красноярск", listOf(590.0, 500.0, 450.0, 400.0), listOf("drink", "showCheck", "sauce")))
     var pizza: PizzaCity?
     while (true) {
         pizza = pizzas.getOrNull(
@@ -8,6 +9,7 @@ fun main() {
             Добрый день!
             1 - Санкт-Петербург
             2 - Москва
+            3 - Красноярск
             Иначе - Выход из программы
             Выберите город: 
         """.trimIndent()).toInt() - 1
@@ -40,6 +42,7 @@ fun selectPizza(pizza: PizzaCity) {
     if (index != -1) {
         pizza.showCheckPhoto()
         pizza.saleDrink()
+        pizza.saleSauce()
     }
 }
 
