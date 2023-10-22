@@ -10,7 +10,6 @@ fun main() {
         selectPizza(pizza)
     }
 }
-
 fun selectPizza(pizza: PizzaCity) {
     var index: Int
     do {
