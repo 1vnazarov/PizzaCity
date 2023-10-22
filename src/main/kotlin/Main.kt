@@ -4,17 +4,24 @@ fun main() {
         PizzaCity("Красноярск", listOf(590.0, 500.0, 450.0, 400.0, 200.0, 50.0, 70.0), listOf("drink", "showCheck", "sauce")))
     var pizza: PizzaCity?
     while (true) {
-        pizza = pizzas.getOrNull(getInput("Добрый день!\n" + prettyStringList(pizzas.mapIndexed{i, v -> "${i + 1} - ${v.getCity()}\n"}.toString())
-            + "Иначе - Выход из программы\nВыберите город: ").toInt() - 1)
+        var index = getInput("Добрый день!\n" + prettyStringList(pizzas.mapIndexed{i, v -> "${i + 1} - ${v.getCity()}\n"}.toString())
+                + "Иначе - Выход из программы\nВыберите город: ").toIntOrNull()
+        if (index !is Int) break
+        index--
+        pizza = pizzas.getOrNull(index)
         if (pizza == null) break
         selectPizza(pizza)
     }
 }
 fun selectPizza(pizza: PizzaCity) {
-    var index: Int
+    var index: Int?
     do {
-        index = getInput(prettyStringList(pizza.getNames().mapIndexed{i, v -> "${i + 1} - $v пицца\n"}.toString())
-                + "0 - Вывести статистику\nВыберите пиццу: ").toInt() - 1
+        index = getInput(prettyStringList(pizza.getNames().mapIndexed{i, v -> "${i + 1} - $v пицца\n"}.toString()) + "0 - Вывести статистику\nВыберите пиццу: ").toIntOrNull()
+        if (index !is Int) {
+            println("Некорректный выбор пиццы")
+            continue
+        }
+        index--
         when (index) {
             in 0..3 -> pizza.sale(index)
             -1 -> pizza.showStat()
