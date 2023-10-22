@@ -66,9 +66,10 @@ class PizzaCity(
     }
     override fun saleSauce() {
         if (!(addons.contains("sauce"))) return
-        val index = getInput( "Выберите соус:\n" + prettyStringList(sauceNames.mapIndexed{i, v -> "${i + 1} - $v\n"}.toString())
+        var index = getInput( "Выберите соус:\n" + prettyStringList(sauceNames.mapIndexed{i, v -> "${i + 1} - $v\n"}.toString())
                 + "Иначе - Без соуса\n").toIntOrNull()
         if (index !is Int) return
+        index--
         when (index) {
             in 0..1 -> {
                 sauces[index].countSale++
